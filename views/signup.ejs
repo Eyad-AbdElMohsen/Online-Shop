@@ -11,10 +11,35 @@
         </div>
     <% }%>
         <form action="/signup" method="POST">
-        <input type="text" class="form-control" name="username" placeholder="Enter ur Username" required><br>
-        <input type="email" class="form-control" name="email" placeholder="Enter ur Email"required><br>
-        <input type="password" class="form-control" name="password" placeholder="Enter ur Password"required><br>
-        <input type="password" class="form-control" name="confirmPassword" placeholder="Confirm ur Password"required><br>
+        
+        <input type="text" class="form-control" name="username" placeholder="Enter ur Username"><br>
+        <% let usernameError = validationError.find(err => err.path === 'username') %>
+        <% if(usernameError){ %>
+            <div class="alert alert-danger">
+                <%= usernameError.msg %>
+            </div>
+        <% }%>
+        <input type="email" class="form-control" name="email" placeholder="Enter ur Email"><br>
+        <% let emailError = validationError.find(err => err.path === 'email') %>
+        <% if(emailError){ %>
+            <div class="alert alert-danger">
+                <%= emailError.msg %>
+            </div>
+        <% }%>
+        <input type="password" class="form-control" name="password" placeholder="Enter ur Password"><br>
+        <% let passwordError = validationError.find(err => err.path === 'password') %>
+        <% if(passwordError){ %>
+            <div class="alert alert-danger">
+                <%= passwordError.msg %>
+            </div>
+        <% }%>
+        <input type="password" class="form-control" name="confirmPassword" placeholder="Confirm ur Password"><br>
+        <% let confirmPasswordError = validationError.find(err => err.path === 'confirmPassword') %>
+        <% if(confirmPasswordError){ %>
+            <div class="alert alert-danger">
+                <%= confirmPasswordError.msg %>
+            </div>
+        <% }%>
         <input type="submit" value="Create" class="btn btn-primary">
     </form>
     <br>
