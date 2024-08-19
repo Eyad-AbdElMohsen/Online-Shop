@@ -1,7 +1,10 @@
 const authModel = require('../models/auth.model')
+const validationResult = require('express-validator').validationResult
 
 exports.getSignup = (req, res, next) => {
-    res.render('signup', { messages: req.flash('errors') });
+    res.render('signup', { 
+        messages: req.flash('errors') 
+    });
 }
 
 exports.postSignup = async(req, res, next) => {
@@ -11,11 +14,13 @@ exports.postSignup = async(req, res, next) => {
     }catch(err){
         req.flash('errors', err.userMessage || "An error has occured");
         res.redirect('/signup')
-    }    
+    }  
 }
 
 exports.getLogin = (req, res, next) => {
-    res.render('login' , { messages: req.flash('errors') });
+    res.render('login' , { 
+        messages: req.flash('errors') 
+    });
 }
 
 exports.postLogin= async(req, res, next) => {
