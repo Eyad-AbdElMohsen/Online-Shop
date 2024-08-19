@@ -12,8 +12,20 @@
     <% }%>
     <form action="/login" method="POST">
         <input type="email" class="form-control" name="email" placeholder="Enter ur Email">
+        <% let emailError = validationError.find(err => err.path === 'email') %>
+        <% if(emailError){ %>
+            <div class="alert alert-danger">
+                <%= emailError.msg %>
+            </div>
+        <% }%>
         <br>
         <input type="password" class="form-control" name="password" placeholder="Enter ur Password">
+        <% let passwordError = validationError.find(err => err.path === 'password') %>
+        <% if(passwordError){ %>
+            <div class="alert alert-danger">
+                <%= passwordError.msg %>
+            </div>
+        <% }%>
         <br>
         <input type="submit" value="Login" class="btn btn-primary">
     </form>

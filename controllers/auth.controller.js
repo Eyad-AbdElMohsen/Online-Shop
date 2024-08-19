@@ -26,17 +26,24 @@ exports.postSignup = async(req, res, next) => {
 
 exports.getLogin = (req, res, next) => {
     res.render('login' , { 
-        messages: req.flash('errors') 
+        messages: req.flash('errors'),
+        validationError : req.flash('validationErrors')
     });
 }
 
 exports.postLogin= async(req, res, next) => {
-    try {
-        let id = await authModel.login(req.body.email, req.body.password);
-        req.session.userId = id
-        res.redirect('/')
-    }catch(err){
-        req.flash('errors', err.userMessage || "An error has occured");
+    if(validationResult(req).isEmpty()){
+        try {
+            let id = await authModel.login(req.body.email, req.body.password);
+            req.session.userId = id
+            res.redirect('/')
+        }catch(err){
+            req.flash('errors', err.userMessage || "An error has occured");
+            res.redirect('/login')
+        }
+    }
+    else{
+        req.flash('validationErrors', validationResult(req).array() || "An error has occured");
         res.redirect('/login')
     }
 }
