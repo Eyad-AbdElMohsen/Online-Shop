@@ -3,12 +3,13 @@ const bodyParser = require('body-parser')
 const check = require('express-validator').check
 const body = require('express-validator').body
 
+const authGuard = require('./guards/auth.guard')
 
 const authController = require('../controllers/auth.controller')
 
-router.get('/signup', authController.getSignup);
+router.get('/signup', authGuard.isNotAuth, authController.getSignup);
 
-router.post('/signup',
+router.post('/signup', authGuard.isNotAuth ,
     bodyParser.urlencoded({extended : true}),
     check("username" , "Username cant have a number")
         .exists().withMessage("Full name is required")
@@ -34,9 +35,9 @@ router.post('/signup',
     }),
     authController.postSignup
 )
-router.get('/login', authController.getLogin);
+router.get('/login', authGuard.isNotAuth, authController.getLogin);
 
-router.post('/login',
+router.post('/login', authGuard.isNotAuth,
     bodyParser.urlencoded({extended : true}),
     
     check("email" , "Email must be valid gmail")
@@ -53,6 +54,6 @@ router.post('/login',
     authController.postLogin
 )
 
-router.all('/logout' , authController.logout);
+router.all('/logout' , authGuard.isAuth, authController.logout);
 
 module.exports = router 
