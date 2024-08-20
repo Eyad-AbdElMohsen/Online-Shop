@@ -21,6 +21,7 @@ exports.getAllProducts = async() => {
         await mongoose.disconnect()
         return products
     }catch(err){
+        await mongoose.disconnect()
         throw err
     }
 }

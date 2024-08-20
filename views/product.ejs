@@ -4,19 +4,31 @@
 
 <div class = "container">
     <% if(product) {%>
-        <div class = 'row'>
-            <div class="col col-12 col-md-6" style="padding: 40px; margin-top: 20px;">
-                <img src=" <%= product.image%>" class="w-100">
-                <form action="/cart" method="POST"></form>
-                <input type="number" name="amount" class="form-control">
-                <input type="submit" value="add to cart" class="btn btn-primary">
+        <form action="/cart" method="POST">
+            <div class = 'row'>
+                <div class="col col-12 col-md-6" style="padding: 40px; margin-top: 20px;">
+                    <img src=" <%= product.image%>" class="w-100">
+                    <% if(validationError) {%>
+                        <p class="alert alert-danger">
+                            <%= validationError.msg %>
+                        </p>
+                    <% } %>
+                    <form action="/cart" method="POST">
+                        <input type="number" name="amount" class="form-control">
+                        <input type="hidden" name="name" value="<%= product.name %>">
+                        <input type="hidden" name="price" value="<%= product.price %>">
+                        <input type="hidden" name="productId" value="<%= product._id %>">
+                        <input type="hidden" name="redirectTo" value="/product/<%= product._id%>">
+                        <input type="submit" value="Add to Cart" class="btn btn-primary">
+                    </form>
+                </div>
+                <div class="col col-12 col-md-6">
+                    <h3><%= product.name%></h3>
+                    <h5><%= product.price%> $</h5>
+                    <p> Description : <%= product.description %></p>
+                </div>
             </div>
-            <div class="col col-12 col-md-6">
-                <h3><%= product.name%></h3>
-                <h5><%= product.price%> $</h5>
-                <p> Description : <%= product.description %></p>
-            </div>
-        </div>
+        </form>
         <% }else{ %>
             <div class="alert alert-danger">
                 This item is not available -_-

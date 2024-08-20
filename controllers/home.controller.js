@@ -9,7 +9,8 @@ exports.getHome = (req , res , next) => {
         res.render('index',{
             category : category || 'all',
             products : products,
-            isUser: req.session.userId
+            isUser: req.session.userId,
+            validationError: req.flash('validationErrors')[0],
         })
     })
 }

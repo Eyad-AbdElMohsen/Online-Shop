@@ -8,7 +8,8 @@ exports.getProduct = (req , res , next) => {
     productsModel.getProductById(id).then((product) => {
         res.render('product' ,  {
             product : product,
-            isUser: true
+            isUser: true,
+            validationError: req.flash('validationErrors')[0],
         })
     })
 }
