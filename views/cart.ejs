@@ -1,0 +1,48 @@
+<%- include('parts/header.ejs')%>
+<%- include('parts/navbar.ejs')%>
+
+
+
+<% if(items && items.length === 0) { %>
+    <p class="alert alert-danger">There is no itmes in your cart</p>
+<% }else{ %>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">num</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Change Ammount</th>
+                <th scope="col">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% if(validationError) {%>
+                <p class="alert alert-danger">
+                    <%= validationError.msg %>
+                </p>
+            <% } %>
+            <% for(let i = 0 ; i < items.length ; ++i) { %>
+                <tr>
+                    <th scope="row"><%= i + 1 %></th>
+                    <td><%= items[i].name %></td>
+                    <td><%= items[i].price %></td>
+                    <td><%= items[i].amount %></td>
+                    <form action="/cart" method="POST">
+                        <td> <input type="text" name="amount" class="form-control"value = "<%= items.amount %>"></td>
+                        <td> <%= items[i].price * items[i].amount %>$</td>
+                        <td>
+                            <input type="hidden" name="_id" value="<%= items[i]._id %>">
+                            <input type="submit" name="btn btn-success" value="save" formaction="/cart/save">
+                            <input type="submit" name="btn btn-danger" value="Delete" formaction="/cart/delete">
+                        </td>
+                    </form>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+<% } %>
+
+
+<%- include('parts/footer.ejs')%>
