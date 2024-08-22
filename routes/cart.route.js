@@ -34,4 +34,10 @@ router.post('/delete',
     bodyParser.urlencoded({extended : true}), 
     cartController.postDelete
 )
+
+router.post('/delete-all', 
+    authGuard.isAuth, 
+    bodyParser.urlencoded({extended : true}), 
+    cartController.postDeleteAllItems
+)
 module.exports = router 

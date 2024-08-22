@@ -69,3 +69,14 @@ exports.deleteItem = async(id) => {
         throw err
     }
 }
+
+exports.deleteAllItems = async() => {
+    try{
+        await mongoose.connect(DB_URL)
+        await CartItem.deleteMany({});
+        await mongoose.disconnect()
+    }catch(err){
+        await mongoose.disconnect()
+        throw err
+    }
+}

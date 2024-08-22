@@ -66,3 +66,13 @@ exports.postDelete = async(req, res, next) => {
         res.redirect('/cart')
     }
 }
+
+exports.postDeleteAllItems = async(req, res, next) => {
+    try{
+        await cartModel.deleteAllItems()
+        res.redirect('/cart')
+    }catch(err) {
+        console.log('post delet all items err: ' + err)
+        res.redirect('/cart')
+    }
+}
