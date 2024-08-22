@@ -14,12 +14,29 @@ const cartSchema = mongoose.Schema({
 
 const CartItem = mongoose.model('cart' , cartSchema);
 
+exports.editItem = async(id, newData) => {
+    try{
+        await mongoose.connect(DB_URL)
+        await CartItem.updateOne({_id: id}, newData)
+        await mongoose.disconnect()
+    }
+    catch(err){
+        await mongoose.disconnect()
+        console.log('edit item err: ' + err)
+    }
+}
+
 exports.addNewItem = async(data) => {
     try {
         await mongoose.connect(DB_URL)
-        let item = new CartItem(data);
-        await item.save()
-        await mongoose.disconnect()
+        let oldItem = await CartItem.find({ productId: data.productId })
+        if(oldItem.length !== 0){
+            await CartItem.updateOne({productId: data.productId}, data)
+        }else{
+            let newItem = new CartItem(data);
+            await newItem.save()
+            await mongoose.disconnect()
+        }
     }catch(err){
         await mongoose.disconnect()
         console.log('add item err :' + err)
@@ -39,18 +56,6 @@ exports.getItemByUser = async(userId) => {
     }catch(err){
         await mongoose.disconnect()
         console.log('get item err :' + err)
-    }
-}
-
-exports.editItem = async(id, newData) => {
-    try{
-        await mongoose.connect(DB_URL)
-        await CartItem.updateOne({_id: id}, newData)
-        await mongoose.disconnect()
-    }
-    catch(err){
-        await mongoose.disconnect()
-        console.log('edit item err: ' + err)
     }
 }
 
