@@ -5,6 +5,7 @@ const check = require('express-validator').check
 const authGuard = require('./guards/auth.guard')
 
 const cartController  = require('../controllers/cart.controller')
+const orderController  = require('../controllers/order.controller')
 
 router.get('/',
     authGuard.isAuth, 
@@ -40,4 +41,17 @@ router.post('/delete-all',
     bodyParser.urlencoded({extended : true}), 
     cartController.postDeleteAllItems
 )
+
+router.post('/order-one', 
+    authGuard.isAuth,
+    bodyParser.urlencoded({extended : true}),
+    orderController.postOrder
+)
+
+router.post('/order-all', 
+    authGuard.isAuth,
+    bodyParser.urlencoded({extended : true}),
+    orderController.postAllOrder
+)
+
 module.exports = router 

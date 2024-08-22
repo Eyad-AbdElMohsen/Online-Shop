@@ -10,6 +10,7 @@ const homeRouter = require('./routes/home.route')
 const productRouter = require('./routes/product.route')
 const authRouter = require('./routes/auth.route');
 const cartRouter = require('./routes/cart.route')
+const orderRouter = require('./routes/order.route.js')
 
 app.use(express.static(path.join(__dirname , '/assets')))
 app.use(express.static(path.join(__dirname , '/uploaded-imgs')))
@@ -39,6 +40,7 @@ app.use('/' , homeRouter)
 app.use('/' , authRouter)
 app.use('/product' , productRouter)
 app.use('/cart' , cartRouter)
+app.use('/orders' , orderRouter)
 
 
 app.listen(3000, (err) => {

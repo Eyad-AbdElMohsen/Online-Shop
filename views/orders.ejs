@@ -1,0 +1,41 @@
+<%- include('parts/header.ejs')%>
+<%- include('parts/navbar.ejs')%>
+
+
+
+<% if(items && items.length === 0) { %>
+    <p class="alert alert-danger"> There are no Orders yet -__- </p>
+<% }else{ %>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Cost</th>
+                <th scope="col">Status</th>
+                <th scope="col">Order Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for(let i = 0; i < items.length; ++i) { %>
+                <tr>
+                    <th scope="row"><%= i + 1 %></th>
+                    <td><%= items[i].name %></td>
+                    <td><%= items[i].cost %></td>
+                    <td><%= items[i].amount %></td>
+                    <td><%= items[i].cost * items[i].amount %>$</td>
+                    <td><%= items[i].timestamp %></td>
+                    <td>
+                            <input type="hidden" name="_id" value="<%= items[i]._id %>">
+                        </td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+<% } %>
+
+
+
+
+<%- include('parts/footer.ejs')%>

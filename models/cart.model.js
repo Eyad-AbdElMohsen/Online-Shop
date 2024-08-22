@@ -66,7 +66,7 @@ exports.deleteItem = async(id) => {
         await mongoose.disconnect()
     }catch(err){
         await mongoose.disconnect()
-        throw err
+        console.log('delete item err :' + err)
     }
 }
 
@@ -77,6 +77,6 @@ exports.deleteAllItems = async() => {
         await mongoose.disconnect()
     }catch(err){
         await mongoose.disconnect()
-        throw err
+        console.log('delete all items err :' + err)
     }
 }

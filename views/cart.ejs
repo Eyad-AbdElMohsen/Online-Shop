@@ -1,53 +1,59 @@
 <%- include('parts/header.ejs')%>
 <%- include('parts/navbar.ejs')%>
 
-
-
 <% if(items && items.length === 0) { %>
-    <p class="alert alert-danger">There is no itmes in your cart</p>
+    <p class="alert alert-danger">There are no items in your cart</p>
 <% }else{ %>
     <table class="table">
         <thead>
             <tr>
-                <th scope="col">num</th>
+                <th scope="col">#</th>
                 <th scope="col">Product Name</th>
                 <th scope="col">Price</th>
                 <th scope="col">Amount</th>
-                <th scope="col">Change Ammount</th>
+                <th scope="col">Change Amount</th>
                 <th scope="col">Total</th>
+                <th scope="col">Actions</th>
             </tr>
         </thead>
         <tbody>
-            <% if(validationError) {%>
+            <% if(validationError) { %>
                 <p class="alert alert-danger">
                     <%= validationError.msg %>
                 </p>
             <% } %>
-            <% for(let i = 0 ; i < items.length ; ++i) { %>
+            <% for(let i = 0; i < items.length; ++i) { %>
                 <tr>
                     <th scope="row"><%= i + 1 %></th>
                     <td><%= items[i].name %></td>
                     <td><%= items[i].price %></td>
                     <td><%= items[i].amount %></td>
-                    <form action="/cart" method="POST">
-                        <td> <input type="text" name="amount" class="form-control"value = "<%= items.amount %>"></td>
-                        <td> <%= items[i].price * items[i].amount %>$</td>
+                    <form action="/cart" method="POST" class="d-flex justify-content-end align-items-center">
+                        <td>
+                            <input type="text" name="amount" class="form-control"value = "<%= items.amount %>">
+                        </td>
+                        <td><%= items[i].price * items[i].amount %>$</td>
                         <td>
                             <input type="hidden" name="_id" value="<%= items[i]._id %>">
-                            <input type="submit" name="btn btn-success" value="save" formaction="/cart/save">
-                            <input type="submit" name="btn btn-danger" value="Delete" formaction="/cart/delete">
+                            <input type="submit" class="btn btn-primary me-2" value="Save" formaction="/cart/save">
+                            <input type="submit" class="btn btn-danger me-2" value="Delete" formaction="/cart/delete">
+                            <input type="submit" class="btn btn-success" value="Order" formaction="/cart/order-one">
+                            <input type="hidden" name="productId" value="<%= items[i].productId %>">
                         </td>
                     </form>
                 </tr>
             <% } %>
         </tbody>
     </table>
-    <div class="text-end">
+
+    <div class="d-flex justify-content-end">
+        <form action="/cart/order-all" method="POST" class="me-2">
+            <button type="submit" class="btn btn-success">Order All</button>
+        </form>
         <form action="/cart/delete-all" method="POST">
             <button type="submit" class="btn btn-danger">Delete All</button>
         </form>
     </div>
 <% } %>
-
 
 <%- include('parts/footer.ejs')%>
