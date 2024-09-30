@@ -21,12 +21,19 @@ exports.getCart = async (req, res, next) => {
 
 
 exports.postCart = async(req , res , next) => {
-    if(validationResult(req).isEmpty()){
+    if(validationResult(req).isEmpty()){ 
         try{
+            let oldAmount = +req.body.amount;
+            let items = await cartModel.getItemByUser(req.session.userId)
+            for(item of items){
+                if(item.name == req.body.name){
+                    oldAmount = +item.amount + +req.body.amount ;
+                }
+            }
             await cartModel.addNewItem({
                 name: req.body.name,
                 price: req.body.price,
-                amount: req.body.amount,
+                amount: oldAmount,
                 productId: req.body.productId,
                 userId: req.session.userId,
                 timestamp: Date.now()
