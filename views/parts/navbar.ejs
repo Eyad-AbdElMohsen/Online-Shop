@@ -14,8 +14,10 @@
                 <li><a class="nav-link active" href="/login">Log In</a></li>
                 <li><a class="nav-link active" href="/signup">Sign Up</a></li>
             <% } %>
-            <li><a class="nav-link active" href="/admin/addProduct">Add Product</a></li>
-            <li><a class="nav-link active" href="/admin/manageOrders">Manage Orders</a></li>
+            <% if(isAdmin){ %>
+                <li><a class="nav-link active" href="/admin/add">Add Product</a></li>
+                <li><a class="nav-link active" href="/admin/orders">Manage Orders</a></li>
+            <% } %>
         </ul>
         <% if(isUser){ %>
         <form class="d-flex" action="/logout" method="POST">

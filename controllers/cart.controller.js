@@ -8,6 +8,7 @@ exports.getCart = async (req, res, next) => {
             res.render('cart' , {
                 items: items,
                 isUser: true,
+                isAdmin: req.session.isAdmin,
                 validationError: req.flash('validationErrors')[0],
             })
         }catch(err) {

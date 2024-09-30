@@ -7,7 +7,11 @@ const DB_URL = 'mongodb://localhost:27017/online-shop'
 const userSchema = mongoose.Schema({
     username : String,
     email: String,
-    password: String
+    password: String,
+    isAdmin: {
+        type: Boolean,
+        default: false,
+    }
 });
 
 const User = mongoose.model("user" , userSchema);
@@ -22,9 +26,9 @@ exports.createNewUser = async(username , email , password) => {
             //create
             let hashedPass = await bcrypt.hash(password , 10)
             let user = new User({
-                username : username,
-                email : email ,
-                password : hashedPass
+                username: username,
+                email: email ,
+                password: hashedPass,
             })
             await user.save()
             await mongoose.disconnect()
@@ -62,7 +66,10 @@ exports.login = async(email , password) => {
                 // login successfully
                 // set session 
                 await mongoose.disconnect()
-                return user._id;
+                return {
+                    id: user._id,
+                    isAdmin: user.isAdmin,
+                }
             }
         }
     }catch(err){

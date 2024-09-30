@@ -5,7 +5,8 @@ exports.getSignup = (req, res, next) => {
     res.render('signup', { 
         messages: req.flash('errors'),
         validationError: req.flash('validationErrors'),
-        isUser: false
+        isUser: false,
+        isAdmin: false,
     });
 }
 
@@ -29,15 +30,17 @@ exports.getLogin = (req, res, next) => {
     res.render('login' , { 
         messages: req.flash('errors'),
         validationError : req.flash('validationErrors'),
-        isUser: false
+        isUser: false,
+        isAdmin: false,
     });
 }
 
 exports.postLogin= async(req, res, next) => {
     if(validationResult(req).isEmpty()){
         try {
-            let id = await authModel.login(req.body.email, req.body.password);
-            req.session.userId = id
+            let result = await authModel.login(req.body.email, req.body.password);
+            req.session.userId = result.id
+            req.session.isAdmin = result.isAdmin
             res.redirect('/')
         }catch(err){
             req.flash('errors', err.userMessage || "An error has occured");

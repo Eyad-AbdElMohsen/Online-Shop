@@ -7,6 +7,7 @@ exports.getOrders = async(req, res, next) => {
             res.render('orders' , {
                 items: items,
                 isUser: true,
+                isAdmin: req.session.isAdmin,
             })
     }catch(err){
         console.log('get order err :' + err)

@@ -1,0 +1,57 @@
+<%- include('parts/header.ejs')%>
+<%- include('parts/navbar.ejs')%>
+
+<div class="container text-center">
+    <h3> Add Product </h3>
+    <form action="/admin/add" method="POST" enctype="multipart/form-data">
+        <input type="text" class="form-control" name="name" placeholder="Name">
+        <% let nameError = validationError.find(err => err.path === 'name') %>
+        <% if(nameError){ %>
+            <p class="alert alert-danger">
+                <%= nameError.msg %>
+            </p>
+        <% } %>
+
+        <input type="number" class="form-control mt-2" name="price" placeholder="Price" step="0.01">
+        <% let priceError = validationError.find(err => err.path === 'price') %>
+        <% if(priceError){ %>
+            <p class="alert alert-danger">
+                <%= priceError.msg %>
+            </p>
+        <% } %>
+
+        <textarea class="form-control mt-2" name="description" placeholder="Description"></textarea>
+        <% let descriptionError = validationError.find(err => err.path === 'description') %>
+        <% if(descriptionError){ %>
+            <p class="alert alert-danger">
+                <%= descriptionError.msg %>
+            </p>
+        <% } %>
+
+        <select class="form-control mt-2" name="category">
+            <option value="">Choose Category</option>
+            <option value="Headphones">Headphones</option>
+            <option value="Television">Television</option>
+            <option value="Laptops">Laptops</option>
+            <option value="Wearables">Wearables</option>
+        </select>
+        <% let categoryError = validationError.find(err => err.path === 'category') %>
+        <% if(categoryError){ %>
+            <p class="alert alert-danger">
+                <%= categoryError.msg %>
+            </p>
+        <% } %>
+
+        <input type="file" class="form-control mt-2" name="image" accept="image/*">
+        <% let imgError = validationError.find(err => err.path === 'image') %>
+        <% if(imgError){ %>
+            <p class="alert alert-danger">
+                <%= imgError.msg %>
+            </p>
+        <% } %>
+
+        <button type="submit" class="btn btn-primary mt-3">Add Product</button>
+    </form>
+</div>
+
+<%- include('parts/footer.ejs')%>
