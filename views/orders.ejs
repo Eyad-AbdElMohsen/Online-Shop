@@ -22,9 +22,9 @@
                 <tr>
                     <th scope="row"><%= i + 1 %></th>
                     <td><%= items[i].name %></td>
-                    <td><%= items[i].cost %></td>
                     <td><%= items[i].amount %></td>
                     <td><%= items[i].cost * items[i].amount %>$</td>
+                    <td> Pending </td>
                     <td><%= items[i].timestamp %></td>
                     <td>
                             <input type="hidden" name="_id" value="<%= items[i]._id %>">
