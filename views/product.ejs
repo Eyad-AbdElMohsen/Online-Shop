@@ -7,7 +7,7 @@
         <form action="/cart" method="POST">
             <div class = 'row'>
                 <div class="col col-12 col-md-6" style="padding: 40px; margin-top: 20px;">
-                    <img src=" <%= product.image%>" class="w-100">
+                    <img src="<%= product.image%>" class="w-100">
                     <% if(validationError) {%>
                         <p class="alert alert-danger">
                             <%= validationError.msg %>

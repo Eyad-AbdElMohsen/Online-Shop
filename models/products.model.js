@@ -47,3 +47,21 @@ exports.getProductById = async(id) => {
         throw err
     }
 }   
+
+exports.insertNewProduct = async(name, price, description, category, image) => {
+    try {
+        await mongoose.connect(DB_URL)
+        let product = new Product({
+            name: name,
+            price: price,
+            description: description,
+            category: category,
+            image: '/' + image
+        })
+        await product.save()
+        await mongoose.disconnect()
+        return product
+    }catch(err){
+        throw err
+    }
+}  
