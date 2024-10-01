@@ -1,0 +1,95 @@
+<%- include('parts/header.ejs') %>
+<%- include('parts/navbar.ejs') %>
+
+<h2>Email Product Table</h2>
+
+<label for="statusFilter">Filter by status:</label>
+<select id="statusFilter" onchange="filterTable()">
+    <option value="all">All</option>
+    <option value="pending">Pending</option>
+    <option value="sending">Sending</option>
+    <option value="completed">Completed</option>
+</select>
+
+<table id="productTable">
+    <thead>
+        <tr>
+            <th>Email</th>
+            <th>Product Name</th>
+            <th>Amount</th>
+            <th>Cost</th>
+            <th>Status</th>
+            <th>Time</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% if (Array.isArray(items) && items.length) { %>
+            <% items.forEach(item => { %>
+                <tr>
+                    <td><%= item.email %></td>
+                    <td><%= item.name %></td>
+                    <td><%= item.amount %></td>
+                    <td><%= item.cost %></td>
+                    <td class="<%= item.status %>"><%= item.status.charAt(0).toUpperCase() + item.status.slice(1) %></td>
+                    <td><%= item.timestamp %></td>
+                    <td>
+                        <!-- Form to submit the status and save for each row -->
+                        <form action="/admin/orders/save" method="POST">
+                            <input type="hidden" name="userId" value="<%= item.userId %>">
+                            <select name="status">
+                                <option value="pending" <%= item.status === 'pending' ? 'selected' : '' %>>Pending</option>
+                                <option value="sending" <%= item.status === 'sending' ? 'selected' : '' %>>Sending</option>
+                                <option value="completed" <%= item.status === 'completed' ? 'selected' : '' %>>Completed</option>
+                            </select>
+                            <button type="submit" class="save-button">Save</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }); %>
+        <% } else { %>
+            <tr>
+                <td colspan="7">No items available.</td>
+            </tr>
+        <% } %>
+    </tbody> 
+</table>
+
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    .pending {
+        color: blue;
+    }
+    .sending {
+        color: red;
+    }
+    .completed {
+        color: green;
+    }
+    .save-button {
+        margin-left: 10px;
+        padding: 5px 10px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+    .save-button:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+<%- include('parts/footer.ejs') %>

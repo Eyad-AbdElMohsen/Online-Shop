@@ -23,4 +23,8 @@ check('uploaded-imgs').custom((value, {req}) => {
 }),
 adminController.postAdd)
 
+router.get('/orders', adminGuard, adminController.getOrders)
+
+router.post('/orders/save', adminGuard, adminController.postOrders)
+
 module.exports = router;

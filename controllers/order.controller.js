@@ -16,7 +16,7 @@ exports.getOrders = async(req, res, next) => {
 
 exports.postOrder = async(req, res, next) => {
     try{
-        await orderModel.orderOneItem(req.session.userId, req.body.productId)
+        await orderModel.orderOneItem(req.session.userId, req.body.productId, "pending")
         res.redirect('/orders')
     }catch(err){
         console.log('post order err :' + err)
@@ -25,7 +25,7 @@ exports.postOrder = async(req, res, next) => {
 
 exports.postAllOrder = async(req, res, next) => {
     try{
-        await orderModel.orderAllItem(req.session.userId)
+        await orderModel.orderAllItem(req.session.userId, "pending")
         res.redirect('/orders')
     }catch(err){
         console.log('post all orders err :' + err)

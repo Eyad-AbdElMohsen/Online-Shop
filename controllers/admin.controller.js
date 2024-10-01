@@ -1,4 +1,5 @@
 const productModel = require('../models/products.model')
+const orderModel = require('../models/orders.model')
 const validationResult = require('express-validator').validationResult
 
 exports.getAdd = (req, res, next) => {
@@ -20,6 +21,29 @@ exports.postAdd = async(req, res, next) => {
             req.body.category,
             req.file.filename 
         );
+        res.redirect('/')
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+exports.getOrders = async(req, res, next) => {
+    try{
+        let items = await orderModel.getAllOrders();
+        res.render('manage-order', {
+            items: items,
+            isUser: true,
+            isAdmin: true,
+        })
+    }catch (error) {
+        console.error(error);
+    }
+}
+
+exports.postOrders = async(req, res, next) => {
+    try {
+        await orderModel.editOrderById(req.body.userId, {status: req.body.status})
+        res.redirect('/admin/orders')
     } catch (error) {
         console.error(error);
     }

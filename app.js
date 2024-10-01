@@ -13,8 +13,10 @@ const cartRouter = require('./routes/cart.route')
 const orderRouter = require('./routes/order.route')
 const adminRouter = require('./routes/admin.route')
 
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname , '/assets')))
 app.use(express.static(path.join(__dirname , '/uploaded-imgs')))
+app.use(express.json());
 
 app.set('view engine' , 'ejs')
 app.set('views' , 'views')
