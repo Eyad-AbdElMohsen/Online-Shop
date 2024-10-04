@@ -8,9 +8,11 @@ exports.getOrders = async(req, res, next) => {
                 items: items,
                 isUser: true,
                 isAdmin: req.session.isAdmin,
+                pageTitle: 'Orders'
             })
     }catch(err){
         console.log('get order err :' + err)
+        res.redirect('/error')
     }
 }
 
@@ -20,6 +22,7 @@ exports.postOrder = async(req, res, next) => {
         res.redirect('/orders')
     }catch(err){
         console.log('post order err :' + err)
+        res.redirect('/error')
     }
 }
 
@@ -29,6 +32,7 @@ exports.postAllOrder = async(req, res, next) => {
         res.redirect('/orders')
     }catch(err){
         console.log('post all orders err :' + err)
+        res.redirect('/error')
     }
 }
 

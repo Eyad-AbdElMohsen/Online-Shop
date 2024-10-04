@@ -46,6 +46,21 @@ app.use('/cart' , cartRouter)
 app.use('/orders' , orderRouter)
 app.use('/admin' , adminRouter)
 
+app.get('/error', (req, res, next) => {
+    res.status(500)
+    res.render("error.ejs", {
+        isUser: req.session.userId,
+        isAdmin: req.session.isAdmin
+    })
+})
+
+app.get('/notAdmin', (req, res, next) => {
+    res.status(403)
+    res.render("notAdmin.ejs", {
+        isUser: req.session.userId,
+        isAdmin: false
+    })
+})
 
 app.listen(3000, (err) => {
     if(err)

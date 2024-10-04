@@ -7,21 +7,33 @@ const adminGuard = require('./guards/admin.guard')
 
 router.get('/add', adminGuard, adminController.getAdd)
 
-router.post('/add', adminGuard, multer({
-    storage: multer.diskStorage({
-        destination: (req, file, cb) => {
-            cb(null, 'uploaded-imgs')
-        },
-        filename: (req, file, cb) => {
-            cb(null, Date.now() + '-' + file.originalname)
-        }
-    })
-}).single(/*input name in ejs file*/'image'),// there is a single file we will insert from a single input
-check('uploaded-imgs').custom((value, {req}) => {
-    if(req.file) return true;
-    else throw 'img is required'
-}),
-adminController.postAdd)
+router.post(
+    '/add',
+    adminGuard,
+    multer({
+        storage: multer.diskStorage({
+            destination: (req, file, cb) => {
+                cb(null, 'uploaded-imgs');
+            },
+            filename: (req, file, cb) => {
+                cb(null, Date.now() + '-' + file.originalname);
+            },
+        }),
+    }).single('image'), // For file upload
+
+    // Validation for all form fields
+    check('name').notEmpty().withMessage('Name is required'),
+    check('price')
+        .notEmpty().withMessage('Price is required')
+        .isFloat({ gt: 0 }).withMessage('Price must be a number greater than 0'),
+    check('description').notEmpty().withMessage('Description is required'),
+    check('category').notEmpty().withMessage('Category is required'),
+    check('image').custom((value, { req }) => {
+        if (req.file) return true;
+        throw new Error('Image is required');
+    }),
+    adminController.postAdd
+);
 
 router.get('/orders', adminGuard, adminController.getOrders)
 

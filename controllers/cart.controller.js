@@ -10,6 +10,7 @@ exports.getCart = async (req, res, next) => {
                 isUser: true,
                 isAdmin: req.session.isAdmin,
                 validationError: req.flash('validationErrors')[0],
+                pageTitle: 'Cart'
             })
         }catch(err) {
             console.log('get cart err :' + err)

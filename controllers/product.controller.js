@@ -11,6 +11,7 @@ exports.getProduct = (req , res , next) => {
             isUser: true,
             isAdmin: req.session.isAdmin,
             validationError: req.flash('validationErrors')[0],
+            pageTitle: 'Products'
         })
     })
 }
