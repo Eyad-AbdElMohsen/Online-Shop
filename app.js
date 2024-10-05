@@ -33,7 +33,7 @@ app.use(session({
     cookie: {
         // 1 hour 
         // default : when u close the browser
-        maxAge : 1*60*60*100
+        maxAge : 1*60*60*1000*24
     },
     store : STORE
 }));
