@@ -31,7 +31,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        // 1 hour 
+        // 1 day 
         // default : when u close the browser
         maxAge : 1*60*60*1000*24
     },
